@@ -29,17 +29,63 @@ class BinaryTree:
 
     def delete(self, target):
         currentNode = self.start
-        while currentNode != None and currentNode != target:
+        while currentNode != None and currentNode.data != target:
             prevNode = currentNode
             if target < currentNode.data:
                 currentNode = currentNode.left
             else:
                 currentNode = currentNode.right
 
+        # Case target has no children
+        if currentNode.right == None and currentNode.left == None:
+            if target < prevNode.data:
+                prevNode.left = None
+            else:
+                prevNode.right = None
+
+        # case target has one child
+        elif currentNode.right != None or currentNode.left != None:
+            if prevNode.left == currentNode:
+                if currentNode.right != None:
+                    prevNode.left = currentNode.right
+                else:
+                    prevNode.left = currentNode.left
+
+            if prevNode.right == currentNode:
+                if currentNode.right != None:
+                    prevNode.right = currentNode.right
+                else:
+                    prevNode.right = currentNode.left
+
+        # case target has two children
+        elif currentNode.right != None and currentNode.left != None:
+            rightNode = currentNode.right
+            while rightNode.left != None:
+                smallestNode = rightNode
+                while smallestNode.left != None:
+                    prevNode = smallestNode
+                    smallestNode = smallestNode.right
+            currentNode.data = smallestNode.data
+            prevNode.left = None
+
+    def preOrder(self, currentNode):
+        if currentNode != None:
+            print(currentNode.data)
+            if currentNode.left != None:
+                self.preOrder(currentNode.left)
+            if currentNode.right != None:
+                self.preOrder(currentNode.right)
+
+
+
+
 
 bt = BinaryTree()
-print(bt.start)
 bt.add(1)
-print(bt.start.data)
-bt.add(2)
-print(bt.start.left)
+bt.add(5)
+bt.add(8)
+bt.add(4)
+bt.add(0)
+bt.add(-3)
+
+bt.preOrder(bt.start)
