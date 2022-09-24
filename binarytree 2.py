@@ -76,6 +76,14 @@ class BinaryTree:
             if currentNode.right != None:
                 self.preOrder(currentNode.right)
 
+    def inOrder(self, currentNode):
+        if currentNode != None:
+            print(currentNode.data)
+            if currentNode.left != None:
+                self.inOrder(currentNode.left)
+            elif currentNode.right != None:
+                self.inOrder(currentNode.right)
+
 
 
 
@@ -89,3 +97,7 @@ bt.add(0)
 bt.add(-3)
 
 bt.preOrder(bt.start)
+
+bt.delete(8)
+
+bt.inOrder(bt.start)
